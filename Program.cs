@@ -1,8 +1,3 @@
-//*********************************************************************************************************************************************************************************
-//*Практическая работа №13                                                                                                                                                        *
-//*Сделал Егоров Н.Н, группа 2-ИСП                                                                                                                                                *
-//*Задание: Написать рекурсивную функцию, которая осуществляет перевод числа из десятичной системы исчисления в двоичную систему исчисления (например: 128 - 10000000, 5 - 101)   *
-//*********************************************************************************************************************************************************************************
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -33,24 +28,31 @@ namespace Практическая_работа__13
             Console.WriteLine($"Что-то пошло не так! Ошибка: {ex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Входная строка имела неправильный формат. 
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static string translationOnTwo(BigInteger value)
+        static string translationOnTwo(BigInteger value) 
         {
             if (value == 0)
             {
-                return "0";//возврат 0
+                return "0";
             }
             if (value == 1)
             {
-                return "1";//возврат 1
+                return "1";
             }
             if (value < 0)
             {
                 BigInteger plusValue = value * (-1);
-                return "-" + translationOnTwo(plusValue);//возврат минуса + положительное число, которое нужно перевести в двоичную систему исчисления с помощью рекурсии
+                return "-" + translationOnTwo(plusValue);
             }
             else
             {
-                return translationOnTwo(value / 2) + (value % 2).ToString();//деление нацело на 2 + использование оператора остатка от деления, переведённого в строковый тип данных
+                BigInteger nextValue = value / 2;
+                string binaryRest = translationOnTwo(nextValue);
+
+                BigInteger remainder = value % 2;
+                string currentDigit = remainder.ToString();
+
+                string result = binaryRest + currentDigit;
+                return result;
             }
         }
         static void Main(string[] args)
